@@ -1,5 +1,6 @@
 package com.example.Project.services.impl;
 
+import com.example.Project.config.AppConstant;
 import com.example.Project.entities.User;
 import com.example.Project.exception.ResourceNotFoundException;
 import com.example.Project.payloads.UserDto;
@@ -7,9 +8,11 @@ import com.example.Project.repositories.UserRepo;
 import com.example.Project.services.UserServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,9 +24,15 @@ public class UserServiceImpl implements UserServices {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = dtoToUser(userDto);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoleList(Set.of("ROLE_USER"));
         User savedUser = userRepo.save(user);
         return userToDto(savedUser);
     }

@@ -25,27 +25,27 @@ public class UserController {
     }
 
     @GetMapping("/getAllUsers")
-    public List<UserDto> getAllUsers(){
-       List<UserDto> list =userServices.getAllUsers();
+    public List<UserDto> getAllUsers() {
+        List<UserDto> list = userServices.getAllUsers();
         return list;
     }
 
 
     @GetMapping("{id}")
-    public UserDto getUserById(@PathVariable int id){
+    public UserDto getUserById(@PathVariable int id) {
         return userServices.getUserById(id);
     }
 
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUserById(@PathVariable int id,@Valid @RequestBody UserDto userDto){
-        UserDto userDto1=userServices.update(userDto,id);
+    public ResponseEntity<UserDto> updateUserById(@PathVariable int id, @Valid @RequestBody UserDto userDto) {
+        UserDto userDto1 = userServices.update(userDto, id);
         return ResponseEntity.ok(userDto1);
 
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<APIResponse> deleteUserByID(@PathVariable int id){
+    public ResponseEntity<APIResponse> deleteUserByID(@PathVariable int id) {
         userServices.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

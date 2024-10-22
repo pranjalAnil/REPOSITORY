@@ -2,14 +2,13 @@ package com.example.Project.controllers;
 
 
 import com.example.Project.config.AppConstant;
-import com.example.Project.entities.Post;
+
 import com.example.Project.payloads.PostDto;
 import com.example.Project.payloads.PostResponse;
 import com.example.Project.services.FileService;
 import com.example.Project.services.PostService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,12 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 @RestController
 @RequestMapping("/api")
