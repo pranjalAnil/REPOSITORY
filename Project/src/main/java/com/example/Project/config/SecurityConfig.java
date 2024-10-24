@@ -1,5 +1,6 @@
 package com.example.Project.config;
 
+import com.example.Project.security.JwtFilter;
 import com.example.Project.services.impl.SecurityCustomDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +23,9 @@ public class SecurityConfig {
 
     @Autowired
     private SecurityCustomDetailService securityCustomDetailService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -43,15 +47,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
-                request.requestMatchers("/api/createUser", "/api/getAllUsers").permitAll()
+                request.requestMatchers("/api/createUser", "/api/getAllUsers","/api/login").permitAll()
                         .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults()); // You can replace this with JWT logic if needed
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.csrf(Customizer -> Customizer.disable()); // Only disable if you're sure it's safe to do so
+        http.csrf(Customizer -> Customizer.disable());
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-
-
-    // If you plan to use the AuthenticationManager directly, keep this bean
 
 }

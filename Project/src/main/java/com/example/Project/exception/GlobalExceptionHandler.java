@@ -1,6 +1,8 @@
 package com.example.Project.exception;
 
 import com.example.Project.payloads.APIResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -23,6 +25,30 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> resp = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String message = error.getDefaultMessage();
+            resp.put(fieldName, message);
+        });
+        return new ResponseEntity<Map<String, String>>(resp, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Map<String, String>> handleJwtTokenNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> resp = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String message = error.getDefaultMessage();
+            resp.put(fieldName, message);
+        });
+        return new ResponseEntity<Map<String, String>>(resp, HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<Map<String, String>> signatureException(MethodArgumentNotValidException ex) {
         Map<String, String> resp = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();

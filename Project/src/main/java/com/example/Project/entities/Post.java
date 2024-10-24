@@ -1,7 +1,4 @@
 package com.example.Project.entities;
-
-import com.example.Project.payloads.CategoryDto;
-import com.example.Project.payloads.UserDto;
 import jakarta.persistence.*;
 import lombok.Data;
 

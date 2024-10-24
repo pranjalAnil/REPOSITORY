@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserServices {
             user.setPassword(userDto.getPassword()); // Hash this in a real app
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoleList(Set.of("ROLE_USER"));
+
         User updatedUser = userRepo.save(user); // Persist changes
         return userToDto(updatedUser);
     }
