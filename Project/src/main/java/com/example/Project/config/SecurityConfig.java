@@ -47,7 +47,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
-                request.requestMatchers("/api/createUser", "/api/getAllUsers","/api/login").permitAll()
+                request.requestMatchers("/api/createUser", "/api/getAllUsers","/api/login","/userController/getAllCategories").permitAll()
                         .anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults()); // You can replace this with JWT logic if needed
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
