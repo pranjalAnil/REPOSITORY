@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginDto loginDto){
-        System.out.println(loginDto);
+        System.out.println(loginDto.getEmail()+ " is logged_in");
         return verify(loginDto);
 
     }
