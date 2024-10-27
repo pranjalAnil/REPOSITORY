@@ -1,17 +1,20 @@
 package com.example.Project.entities;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
 @Data
 public class Post {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int postId;
+
     private String title;
 
     private String content;
@@ -27,11 +30,7 @@ public class Post {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<Comment> comments =new ArrayList<>();
-
-
-
-
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
 }

@@ -1,6 +1,5 @@
 package com.example.Project.services.impl;
 
-import com.example.Project.config.AppConstant;
 import com.example.Project.entities.User;
 import com.example.Project.exception.ResourceNotFoundException;
 import com.example.Project.payloads.UserDto;
@@ -11,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserServices {
-
     @Autowired
     private UserRepo userRepo;
 
@@ -27,15 +26,19 @@ public class UserServiceImpl implements UserServices {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = dtoToUser(userDto);
-
+        Set<String> role=new HashSet<>();
+        role.add("Normal_User");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoleList(Set.of("ROLE_USER"));
+        user.setRoleList(role);
         User savedUser = userRepo.save(user);
         return userToDto(savedUser);
     }
+
 
     @Override
     public UserDto update(UserDto userDto, Integer userId) {
@@ -47,13 +50,10 @@ public class UserServiceImpl implements UserServices {
         user.setAbout(userDto.getAbout());
 
         if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
-            user.setPassword(userDto.getPassword()); // Hash this in a real app
+            user.setPassword(passwordEncoder.encode(userDto.getPassword())); // Always hash passwords
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoleList(Set.of("ROLE_USER"));
-
-        User updatedUser = userRepo.save(user); // Persist changes
+        User updatedUser = userRepo.save(user);
         return userToDto(updatedUser);
     }
 

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,9 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -40,6 +41,7 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -50,6 +52,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/createUser", "/api/getAllUsers","/api/login","/userController/getAllCategories").permitAll()
                         .anyRequest().authenticated());
+
+//        http.authorizeHttpRequests(request ->
+//                request.requestMatchers("/userController/addData","/userController/deleteCategoryById/{id}")
+//                        .hasRole("ADMIN"));
+
         http.httpBasic(Customizer.withDefaults()); // You can replace this with JWT logic if needed
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf(Customizer -> Customizer.disable());

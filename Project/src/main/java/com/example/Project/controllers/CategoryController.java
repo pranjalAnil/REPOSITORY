@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,19 +29,21 @@ public class CategoryController {
         return list;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getCategoryByID(@PathVariable int id){
         return  ResponseEntity.ok(categoryService.getCategoryByID(id));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CategoryDto> updateCategory(@PathVariable int id,@Valid @RequestBody CategoryDto categoryDto){
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable int id,@Valid @RequestBody CategoryDto categoryDto){
         CategoryDto updateCategory=categoryService.updateCategory(categoryDto,id);
         return ResponseEntity.ok(updateCategory);
 
     }
 
-    @DeleteMapping("{id}")
+
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<CategoryDto> deleteCategory(@PathVariable int id){
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

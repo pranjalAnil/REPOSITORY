@@ -21,4 +21,6 @@ public class UserDto {
 
     @NotEmpty
     private String about;
+
+
 }

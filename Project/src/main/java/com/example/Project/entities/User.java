@@ -23,9 +23,8 @@ public class User implements UserDetails {
 
     private String name;
 
-
+//    UserName
     private String email;
-//user name
 
     @Getter(value = AccessLevel.NONE)
     private String password;
@@ -33,10 +32,10 @@ public class User implements UserDetails {
 
     private String about;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
-    //    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roleList = new HashSet<>();
 
 
