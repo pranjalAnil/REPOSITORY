@@ -3,6 +3,8 @@ package com.example.Project.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +23,7 @@ public class Post {
 
     private String imageName;
 
-    private Date addDate;
+    private LocalDate addDate;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

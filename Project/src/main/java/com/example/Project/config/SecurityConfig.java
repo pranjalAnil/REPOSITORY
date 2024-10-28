@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -36,6 +36,7 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -50,8 +51,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
-                request.requestMatchers("/api/createUser", "/api/getAllUsers","/api/login","/userController/getAllCategories").permitAll()
-                        .anyRequest().authenticated());
+                request.requestMatchers("/api/createUser", "/api/getAllUsers", "/api/login", "/userController/getAllCategories").permitAll()
+                        .requestMatchers("/userController/deleteCategoryById/{id}").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+        );
 
 //        http.authorizeHttpRequests(request ->
 //                request.requestMatchers("/userController/addData","/userController/deleteCategoryById/{id}")

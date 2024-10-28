@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Data
@@ -25,7 +26,7 @@ public class PostDto {
 
     private String imageName;
 
-    private Date addedDate;
+    private LocalDateTime addedDate;
 
     private CategoryDto category;
 

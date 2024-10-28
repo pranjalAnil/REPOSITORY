@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
         Post post = modelMapper.map(postDto, Post.class);
         post.setImageName("default.png");
-        post.setAddDate(new Date());
+//        post.setAddDate(new Date());
         post.setUser(user);
         post.setCategory(category);
 
@@ -77,7 +77,6 @@ public class PostServiceImpl implements PostService {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setImageName(postDto.getImageName());
-        post.setAddDate(new Date());
         Post updatedPost = postRepo.save(post);
         return modelMapper.map(updatedPost, PostDto.class);
     }

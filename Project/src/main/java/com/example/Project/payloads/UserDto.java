@@ -3,6 +3,9 @@ package com.example.Project.payloads;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class UserDto {
 
@@ -21,6 +24,9 @@ public class UserDto {
 
     @NotEmpty
     private String about;
+
+    private List<String> roleList = new ArrayList<>();
+
 
 
 }

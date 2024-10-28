@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,8 +32,8 @@ public class UserServiceImpl implements UserServices {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = dtoToUser(userDto);
-        Set<String> role=new HashSet<>();
-        role.add("Normal_User");
+        List<String> role=new ArrayList<>();
+        role.add("ADMIN");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoleList(role);
         User savedUser = userRepo.save(user);
@@ -44,7 +45,9 @@ public class UserServiceImpl implements UserServices {
     public UserDto update(UserDto userDto, Integer userId) {
         User user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", userId));
-
+        List<String> role=new ArrayList<>();
+        role.add("NORMAL_USER");
+        user.setRoleList(role);
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setAbout(userDto.getAbout());

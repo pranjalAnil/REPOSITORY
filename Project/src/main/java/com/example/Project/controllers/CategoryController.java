@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +42,8 @@ public class CategoryController {
 
 
 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/deleteCategoryById/{id}")
     public ResponseEntity<CategoryDto> deleteCategory(@PathVariable int id){
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

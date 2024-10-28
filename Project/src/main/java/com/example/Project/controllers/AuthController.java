@@ -6,6 +6,8 @@ import com.example.Project.payloads.UserDto;
 import com.example.Project.services.impl.JWTService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,9 +27,9 @@ public class AuthController {
     private JWTService jwtService;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
         System.out.println(loginDto.getEmail()+ " is logged_in");
-        return verify(loginDto);
+        return new ResponseEntity<>(verify(loginDto), HttpStatus.OK);
 
     }
     public String verify(LoginDto loginDto) {

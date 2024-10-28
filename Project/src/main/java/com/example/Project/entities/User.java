@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private List<Post> posts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roleList = new HashSet<>();
+    private List<String> roleList = new ArrayList<>();
 
 
     @Override
