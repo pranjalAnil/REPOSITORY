@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserServices {
     public UserDto createUser(UserDto userDto) {
         User user = dtoToUser(userDto);
         List<String> role=new ArrayList<>();
-        role.add("ADMIN");
+        role.add("NORMAL_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoleList(role);
         User savedUser = userRepo.save(user);

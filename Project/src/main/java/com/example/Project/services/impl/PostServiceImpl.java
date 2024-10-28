@@ -46,7 +46,8 @@ public class PostServiceImpl implements PostService {
 
         Post post = modelMapper.map(postDto, Post.class);
         post.setImageName("default.png");
-//        post.setAddDate(new Date());
+        Date date=new Date();
+        post.setAddDate(date);
         post.setUser(user);
         post.setCategory(category);
 
@@ -73,7 +74,8 @@ public class PostServiceImpl implements PostService {
         Post post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException("Post", " PostId ", postId)
         );
-        // Update fields directly from postDto
+        Date date=new Date();
+        post.setAddDate(date);
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setImageName(postDto.getImageName());

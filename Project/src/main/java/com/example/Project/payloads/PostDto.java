@@ -6,6 +6,7 @@ import com.example.Project.entities.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,7 +27,7 @@ public class PostDto {
 
     private String imageName;
 
-    private LocalDateTime addedDate;
+    private Date addDate;
 
     private CategoryDto category;
 
