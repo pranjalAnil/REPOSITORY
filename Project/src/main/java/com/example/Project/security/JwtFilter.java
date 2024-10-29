@@ -1,10 +1,5 @@
 package com.example.Project.security;
-
-import ch.qos.logback.core.Context;
-import com.example.Project.entities.User;
 import com.example.Project.services.impl.JWTService;
-import com.example.Project.services.impl.UserServiceImpl;
-import io.micrometer.observation.Observation;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -36,13 +36,12 @@ public class PostController {
     private String path;
 
     //    create
-    @PostMapping("/user/{userId}/category/{categoryId}/posts")
+    @PostMapping("/user/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody PostDto postDto,
-            @PathVariable int userId,
             @PathVariable int categoryId
     ) {
-        PostDto createPost = postService.createPost(postDto, userId, categoryId);
+        PostDto createPost = postService.createPost(postDto, categoryId);
         return new ResponseEntity<PostDto>(createPost, HttpStatus.CREATED);
 
     }
@@ -53,6 +52,8 @@ public class PostController {
         List<PostDto> postDtoList = postService.getPostByUser(userId);
         return postDtoList;
     }
+
+
 
     // Get post using post category
     @GetMapping("/category/{categoryId}/posts")

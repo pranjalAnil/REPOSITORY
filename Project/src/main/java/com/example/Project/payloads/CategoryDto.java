@@ -9,7 +9,6 @@ import lombok.Data;
 public class CategoryDto {
 
     private int categoryID;
-
     @NotEmpty(message = "Category title is required")
     private String categoryTitle;
     @NotNull(message = "Category description")

@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
@@ -36,10 +38,12 @@ public class PostServiceImpl implements PostService {
     private CategoryRepo categoryRepo;
 
     @Override
-    public PostDto createPost(PostDto postDto, int userId, int categoryId) {
-        User user = userRepo.findById(userId).orElseThrow(
-                () -> new ResourceNotFoundException("User", " User ID ", userId)
-        );
+    public PostDto createPost(PostDto postDto, int categoryId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
+
         Category category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException("Category", " Category ID ", categoryId)
         );
@@ -55,20 +59,6 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(newPost, PostDto.class);
     }
 
-    //    @Override
-//    public PostDto updatePost(PostDto postDto, int postId) {
-//
-//        Post post=postRepo.findById(postId).orElseThrow(
-//                ()->new ResourceNotFoundException("Post"," PostId ",postId)
-//        );
-//        PostDto postDto1=modelMapper.map(post,PostDto.class);
-//        post.setContent(postDto1.getContent());
-//        post.setTitle(postDto1.getTitle());
-//        post.setImageName("default.png");
-//        post.setAddDate(new Date());
-//        Post post1= postRepo.save(post);
-//        return modelMapper.map(post1,PostDto.class);
-//    }
     @Override
     public PostDto updatePost(PostDto postDto, int postId) {
         Post post = postRepo.findById(postId).orElseThrow(
@@ -137,10 +127,7 @@ public class PostServiceImpl implements PostService {
         return posts.stream().map(post -> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
 
-    @Override
-    public List<PostDto> searchPost(String keyword) {
-        return List.of();
-    }
+
 
 
 }

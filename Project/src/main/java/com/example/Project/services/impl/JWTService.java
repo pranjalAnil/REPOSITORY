@@ -1,9 +1,12 @@
 package com.example.Project.services.impl;
 
+import com.example.Project.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JWTService {
+    @Autowired
+    private User userDetails;
     private String secretKey="";
     public JWTService() throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator=KeyGenerator.getInstance("HmacSHA256");
@@ -27,6 +33,9 @@ public class JWTService {
     }
     public String generateToken(String useName) {
         Map<String,Object> claims=new HashMap<>();
+        claims.put("role", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
         return Jwts.builder()
                 .claims()
                 .add(claims)

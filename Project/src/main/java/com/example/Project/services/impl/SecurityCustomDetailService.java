@@ -24,7 +24,7 @@ public class SecurityCustomDetailService implements UserDetailsService {
         User user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Username " + username, 0));
 
-        Hibernate.initialize(user.getPosts());
+//        Hibernate.initialize(user.getPosts());
 
         return user;
     }

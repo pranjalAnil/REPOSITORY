@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
 //    create
-    PostDto createPost(PostDto postDto,int userId,int categoryId);
+    PostDto createPost(PostDto postDto,int categoryId);
 
 //    Update
     PostDto updatePost(PostDto postDto,int postId);
@@ -28,7 +28,8 @@ public interface PostService {
 //    get all post by user
     List<PostDto> getPostByUser(int userId);
 
-//    Search Post
-    List<PostDto> searchPost(String keyword);
+
+
+
 
 }

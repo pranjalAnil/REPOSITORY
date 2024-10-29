@@ -7,13 +7,12 @@ import com.example.Project.repositories.UserRepo;
 import com.example.Project.services.UserServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,21 +32,24 @@ public class UserServiceImpl implements UserServices {
     public UserDto createUser(UserDto userDto) {
         User user = dtoToUser(userDto);
         List<String> role=new ArrayList<>();
-        role.add("NORMAL_USER");
+        role.add("ROLE_NORMAL_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoleList(role);
+        user.setRole(role);
         User savedUser = userRepo.save(user);
         return userToDto(savedUser);
     }
 
 
     @Override
-    public UserDto update(UserDto userDto, Integer userId) {
-        User user = userRepo.findById(userId).orElseThrow(
-                () -> new ResourceNotFoundException("User", "id", userId));
+    public UserDto update(UserDto userDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
+
         List<String> role=new ArrayList<>();
-        role.add("NORMAL_USER");
-        user.setRoleList(role);
+        role.add("ROLE_NORMAL_USER");
+        user.setRole(role);
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setAbout(userDto.getAbout());
@@ -74,9 +76,12 @@ public class UserServiceImpl implements UserServices {
     }
 
     @Override
-    public void deleteUser(Integer userId) {
-        User user = userRepo.findById(userId).orElseThrow(
-                () -> new ResourceNotFoundException("User", "id", userId));
+    public void deleteUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
+
         this.userRepo.delete(user);
     }
 

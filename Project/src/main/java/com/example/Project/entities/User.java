@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Table(name = "user_Data")
 @Data
 @NoArgsConstructor
+@Component
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,14 +38,17 @@ public class User implements UserDetails {
     private List<Post> posts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roleList = new ArrayList<>();
+    private List<String> role = new ArrayList<>();
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleList.stream()
-                .map(role -> new SimpleGrantedAuthority(role))
-                .collect(Collectors.toSet());
+        Set<SimpleGrantedAuthority> set = new HashSet<>();
+        for (String role : role) {
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role);
+            set.add(simpleGrantedAuthority);
+        }
+        return set;
     }
 
 
