@@ -71,5 +71,5 @@ public class CategoryServiceImpl implements CategoryService {
 
     private Category categoryDtoTOCategory(CategoryDto categoryDto){
         return modelMapper.map(categoryDto ,Category.class);
-    };
+    }
 }

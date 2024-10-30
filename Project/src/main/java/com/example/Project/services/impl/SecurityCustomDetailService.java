@@ -21,11 +21,9 @@ public class SecurityCustomDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "Username " + username, 0));
-
-//        Hibernate.initialize(user.getPosts());
-
-        return user;
+        return userRepo.findByEmail(username)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User", "Username " + username, 0
+                        ));
     }
 }

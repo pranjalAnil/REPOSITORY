@@ -1,10 +1,6 @@
 package com.example.Project.controllers;
-
-
 import com.example.Project.payloads.LoginDto;
-import com.example.Project.payloads.UserDto;
 import com.example.Project.services.impl.JWTService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

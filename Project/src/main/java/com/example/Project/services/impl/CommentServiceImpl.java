@@ -14,13 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+
     @Autowired
     private CommentRepo commentRepo;
+
     @Autowired
     private PostRepo postRepo;
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public CommentDto createComment(CommentDto commentDto, int postId) {
         Post post=postRepo.findById(postId).orElseThrow(
@@ -33,16 +36,6 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
-//    @Override
-//    public void deleteComment(int commentId) {
-//
-//        Comment comment=commentRepo.findById(commentId).orElseThrow(
-//                ()->new ResourceNotFoundException("Comment"," CommentID ",commentId)
-//        );
-//        commentRepo.delete(comment);
-//    }
-
-//
     @Override
     public void deleteComment(int commentId){
         Comment comment= commentRepo.findById(commentId).orElseThrow(

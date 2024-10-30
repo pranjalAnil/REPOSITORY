@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserServices {
         String email = authentication.getName();
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
-
         this.userRepo.delete(user);
     }
 

@@ -47,14 +47,12 @@ public class PostServiceImpl implements PostService {
         Category category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException("Category", " Category ID ", categoryId)
         );
-
         Post post = modelMapper.map(postDto, Post.class);
         post.setImageName("default.png");
         Date date=new Date();
         post.setAddDate(date);
         post.setUser(user);
         post.setCategory(category);
-
         Post newPost = postRepo.save(post);
         return modelMapper.map(newPost, PostDto.class);
     }
@@ -67,7 +65,6 @@ public class PostServiceImpl implements PostService {
                 new ResourceNotFoundException("User","Email "+email,0)
         );
         List<Post> posts=postRepo.findByUser(user);
-
         Post postToUpdate = posts.stream()
                 .filter(post -> post.getPostId() == postId) // assuming Post has a getId() method
                 .findFirst()
