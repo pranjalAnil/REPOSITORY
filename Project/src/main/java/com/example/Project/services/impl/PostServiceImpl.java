@@ -61,24 +61,43 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(PostDto postDto, int postId) {
-        Post post = postRepo.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", " PostId ", postId)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user=userRepo.findByEmail(email).orElseThrow(()->
+                new ResourceNotFoundException("User","Email "+email,0)
         );
+        List<Post> posts=postRepo.findByUser(user);
+
+        Post postToUpdate = posts.stream()
+                .filter(post -> post.getPostId() == postId) // assuming Post has a getId() method
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "Post ID", postId)
+                );
         Date date=new Date();
-        post.setAddDate(date);
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setImageName(postDto.getImageName());
-        Post updatedPost = postRepo.save(post);
+        postToUpdate.setAddDate(date);
+        postToUpdate.setTitle(postDto.getTitle());
+        postToUpdate.setContent(postDto.getContent());
+        postToUpdate.setImageName(postDto.getImageName());
+        Post updatedPost = postRepo.save(postToUpdate);
         return modelMapper.map(updatedPost, PostDto.class);
     }
 
     @Override
-    public void deletePost(int postId) {
-        Post post = postRepo.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("Post", " PostID ", postId)
+    public void deleteMyPost(int postId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user=userRepo.findByEmail(email).orElseThrow(()->
+                new ResourceNotFoundException("User","Email "+email,0)
         );
-        postRepo.delete(post);
+        List<Post> posts=postRepo.findByUser(user);
+
+        Post postToDelete = posts.stream()
+                .filter(post -> post.getPostId() == postId) // assuming Post has a getId() method
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "Post ID", postId)
+                );
+        postRepo.delete(postToDelete);
+
 
     }
 
@@ -126,6 +145,20 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepo.findByUser(user);
         return posts.stream().map(post -> modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PostDto> getMyPosts() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user=userRepo.findByEmail(email).orElseThrow(()->
+                new ResourceNotFoundException("User","Email "+email,0)
+        );
+        List<Post> posts=postRepo.findByUser(user);
+
+        return posts.stream().map(post -> modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+    }
+
+
 
 
 

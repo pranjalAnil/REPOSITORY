@@ -14,7 +14,7 @@ public interface PostService {
     PostDto updatePost(PostDto postDto,int postId);
 
 //    delete
-    void deletePost(int postId);
+    public void deleteMyPost(int postId);
 
 //    getAllPost
     PostResponse getAllPost(int pageNumber, int pageSize,String sortBy);
@@ -27,6 +27,10 @@ public interface PostService {
 
 //    get all post by user
     List<PostDto> getPostByUser(int userId);
+
+    List<PostDto> getMyPosts();
+
+
 
 
 

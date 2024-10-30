@@ -79,13 +79,14 @@ public class PostController {
     @DeleteMapping("/DeletePost/{postId}")
     public ResponseEntity<PostDto> deletePost(@PathVariable int postId) {
         System.out.println("Deleting post with ID: " + postId);
-        postService.deletePost(postId);
+        postService.deleteMyPost(postId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
     @GetMapping("/getAllPosts")
     public PostResponse getAllPosts(
+//            ?pageNumber=0&pageSize=4
             @RequestParam(value = "pageNumber", defaultValue = AppConstant.PAGE_NUMBER, required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstant.PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstant.SORT_BY, required = false) String sortBy
@@ -96,6 +97,12 @@ public class PostController {
         System.out.println(listPostDto);
         System.out.println("Got all posts");
         return listPostDto;
+    }
+
+//    Get User own posts
+    @GetMapping("/myPosts")
+    public ResponseEntity<List<PostDto>>  getMyPosts(){
+        return new ResponseEntity<>(postService.getMyPosts(),HttpStatus.OK);
     }
 
     //    Post Image upload
