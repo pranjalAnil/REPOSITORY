@@ -39,6 +39,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- ... other dependency elements ... -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,7 +60,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -105,6 +110,8 @@
             <version>0.12.5</version>
             <scope>runtime</scope>
         </dependency>
+
+
 
 
     </dependencies>
