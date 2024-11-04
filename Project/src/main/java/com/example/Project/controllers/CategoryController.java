@@ -55,15 +55,12 @@ public class CategoryController {
      * @param categoryDto -> categoryTitle, categoryDescription
      * @return updated category
      */
-
     @PutMapping("{id}")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable int id,@Valid @RequestBody CategoryDto categoryDto){
         CategoryDto updateCategory=categoryService.updateCategory(categoryDto,id);
         return ResponseEntity.ok(updateCategory);
 
     }
-
-
     /**
      *
      * @param id -> to delete category by its id (only admin can delete category)
