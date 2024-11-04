@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserServices {
         user.setAbout(userDto.getAbout());
 
         if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(userDto.getPassword())); // Always hash passwords
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
 
         User updatedUser = userRepo.save(user);

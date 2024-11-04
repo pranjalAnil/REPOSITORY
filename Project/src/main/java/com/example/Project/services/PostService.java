@@ -1,6 +1,5 @@
 package com.example.Project.services;
 
-import com.example.Project.entities.Post;
 import com.example.Project.payloads.PostDto;
 import com.example.Project.payloads.PostResponse;
 
@@ -17,7 +16,7 @@ public interface PostService {
     public void deleteMyPost(int postId);
 
 //    getAllPost
-    PostResponse getAllPost(int pageNumber, int pageSize,String sortBy);
+    PostResponse getAllPost(int pageNumber, int pageSize);
 
 //    get single post
     PostDto getPostById(int postId);

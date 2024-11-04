@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -36,6 +37,12 @@ public class PostController {
     private String path;
 
     //    create
+
+    /**
+     * @param postDto ->
+     * @param categoryId ->title, content
+     * @return createPost, HttpStatus. CREATED
+     */
     @PostMapping("/user/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(
             @Valid @RequestBody PostDto postDto,
@@ -47,35 +54,55 @@ public class PostController {
     }
 
     //Get post using user ID
+
+    /**
+     * @param userId-> get all posts of particular user with userID
+     * @return list postDto
+     */
     @GetMapping("/user/{userId}/posts")
     public List<PostDto> getPostsByUser(@PathVariable int userId) {
-        List<PostDto> postDtoList = postService.getPostByUser(userId);
-        return postDtoList;
+        return postService.getPostByUser(userId);
     }
-
 
 
     // Get post using post category
+
+    /**
+     * @param categoryId -> get all posts of particular category with userID
+     * @return List<PostDto>
+     */
     @GetMapping("/category/{categoryId}/posts")
     public List<PostDto> getPostByCategory(@PathVariable int categoryId) {
-        List<PostDto> postDtoList = postService.getPostByCategory(categoryId);
-        return postDtoList;
+        return postService.getPostByCategory(categoryId);
     }
 
+    /**
+     * @param postId -> get post oby postId
+     * @return PostDto
+     */
     @GetMapping("/post/{postId}")
-    public PostDto getPostByPostID(@PathVariable int postId){
-        PostDto postDto=postService.getPostById(postId);
-        return postDto;
+    public PostDto getPostByPostID(@PathVariable int postId) {
+        return postService.getPostById(postId);
     }
 
     // Update the data using postID
-    @PutMapping("/updatePosts/{postId}") // Make sure the mapping is correct
+
+    /**
+     * @param postId -> find post by using post ID
+     * @param postDto-> title , content (details to update post)
+     * @return PostDto
+     */
+    @PutMapping("/updatePosts/{postId}")
     public ResponseEntity<PostDto> updatePost(@PathVariable int postId, @Valid @RequestBody PostDto postDto) {
         System.out.println("Updating post with ID: " + postId);
         PostDto updatedPost = postService.updatePost(postDto, postId);
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
+    /**
+     * @param postId-> delete post by post id
+     * @return response 204 No_CONTENT
+     */
     @DeleteMapping("/DeletePost/{postId}")
     public ResponseEntity<PostDto> deletePost(@PathVariable int postId) {
         System.out.println("Deleting post with ID: " + postId);
@@ -84,28 +111,44 @@ public class PostController {
 
     }
 
+    /**
+     * That's how we can add filter
+     * @param pageNumber -> start with 0
+     * @param pageSize ->  to divide one page in to multiple
+     * @return PostResponse pageSize,,pageNumber, totalElements, totalPages lastPage
+     */
     @GetMapping("/getAllPosts")
     public PostResponse getAllPosts(
 //            ?pageNumber=0&pageSize=4
             @RequestParam(value = "pageNumber", defaultValue = AppConstant.PAGE_NUMBER, required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstant.PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstant.SORT_BY, required = false) String sortBy
+            @RequestParam(value = "pageSize", defaultValue = AppConstant.PAGE_SIZE, required = false) int pageSize
 
     ) {
         System.out.println("Getting all posts");
-        PostResponse listPostDto = postService.getAllPost(pageNumber, pageSize, sortBy);
+        PostResponse listPostDto = postService.getAllPost(pageNumber, pageSize);
         System.out.println(listPostDto);
         System.out.println("Got all posts");
         return listPostDto;
     }
 
 //    Get User own posts
+
+    /**
+     * @return List<PostDto> --(post of user who logged in)
+     */
     @GetMapping("/myPosts")
-    public ResponseEntity<List<PostDto>>  getMyPosts(){
-        return new ResponseEntity<>(postService.getMyPosts(),HttpStatus.OK);
+    public ResponseEntity<List<PostDto>> getMyPosts() {
+        return new ResponseEntity<>(postService.getMyPosts(), HttpStatus.OK);
     }
 
     //    Post Image upload
+
+    /**
+     * @param image -> add image in .png
+     * @param postId -> add image to particular post
+     * @return postDto with updated image name
+     * @throws IOException -> throws if not able to get or upload image
+     */
     @PostMapping("/post/image/upload/{postId}")
     public ResponseEntity<PostDto> uploadPostImage(
             @RequestParam("image") MultipartFile image,
@@ -124,19 +167,20 @@ public class PostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/post/image/{imageName}" , produces = MediaType.IMAGE_PNG_VALUE)
+    /**
+     * @param imageName -> to get image
+     * @throws IOException -> throws if image not found
+     */
+    @GetMapping(value = "/post/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
     public void downloadImage(
-            @PathVariable("imageName")String imageName,
+            @PathVariable("imageName") String imageName,
             HttpServletResponse response
-    )throws IOException{
-        InputStream resource=fileService.getResource(path,imageName);
+    ) throws IOException {
+        InputStream resource = fileService.getResource(path, imageName);
         response.setContentType(MediaType.IMAGE_PNG_VALUE);
-        StreamUtils.copy(resource,response.getOutputStream());
+        StreamUtils.copy(resource, response.getOutputStream());
 
     }
-
-
-
 
 
 }

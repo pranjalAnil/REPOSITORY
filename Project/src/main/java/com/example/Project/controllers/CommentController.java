@@ -14,12 +14,24 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     @Autowired
     private CommentService commentService;
+
+    /**
+     *
+     * @param commentDto -> content
+     * @param postId -> to comment on particular post
+     * @return commentDto with
+     */
     @PostMapping("/post/{postId}/comments")
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto, @PathVariable int postId){
         CommentDto commentDto1=commentService.createComment(commentDto,postId);
         return new ResponseEntity<CommentDto>(commentDto1, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param commentId -> to delete comment by using comment ID
+     * @return
+     */
     @DeleteMapping("/post/DeleteComments/{commentId}")
     public ResponseEntity<PostDto> deletePost(@PathVariable int commentId) {
         System.out.println("Deleting comment with : " + commentId);

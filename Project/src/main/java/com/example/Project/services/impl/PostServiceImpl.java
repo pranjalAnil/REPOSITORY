@@ -99,8 +99,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPost(int pageNumber, int pageSize,String sortBy) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+    public PostResponse getAllPost(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> pageResult = postRepo.findAll(pageable);
         List<PostDto> postList =pageResult.getContent().stream()
                 .map(post -> this.modelMapper.map(post, PostDto.class))

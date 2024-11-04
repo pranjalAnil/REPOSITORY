@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +17,11 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
+    /**
+     *
+     * @param userDto -> name, email, password, about
+     * @return created user with response 201 created
+     */
     @PostMapping("/createUser")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 
@@ -25,19 +29,32 @@ public class UserController {
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @return List<UserDto>
+     */
     @GetMapping("/getAllUsers")
     public List<UserDto> getAllUsers() {
-        List<UserDto> list = userServices.getAllUsers();
-        return list;
+        return userServices.getAllUsers();
     }
 
 
+    /**
+     *
+     * @param id -> userId
+     * @return user
+     */
     @GetMapping("{id}")
     public UserDto getUserById(@PathVariable int id) {
         return userServices.getUserById(id);
     }
 
 
+    /**
+     *
+     * @param userDto ->  name, email, password, about
+     * @return updated user with response 200 ok
+     */
     @PutMapping("/update")
     public ResponseEntity<UserDto> updateUserById(@Valid @RequestBody UserDto userDto) {
         UserDto userDto1 = userServices.update(userDto);
@@ -45,6 +62,10 @@ public class UserController {
 
     }
 
+    /**
+     *
+     * @return NO_CONTENT
+     */
     @DeleteMapping("/deleteAccount")
     public ResponseEntity<APIResponse> deleteUserByID() {
         userServices.deleteUser();

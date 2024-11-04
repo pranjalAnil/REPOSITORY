@@ -52,7 +52,7 @@ public class SecurityConfig {
                         request.requestMatchers(
                                         "/api/createUser",
                                         "/api/getAllUsers",
-                                        "/api/login",
+                                        "/auth/login",
                                         "/userController/getAllCategories",
                                         "/v3/api-docs",
                                         "/swagger-ui.html",
