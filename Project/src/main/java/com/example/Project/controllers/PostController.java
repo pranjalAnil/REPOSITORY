@@ -36,8 +36,7 @@ public class PostController {
     @Value("${project.image}")
     private String path;
 
-    //    create
-
+    //    Add Post
     /**
      * @param postDto ->
      * @param categoryId ->title, content
@@ -115,7 +114,7 @@ public class PostController {
      * That's how we can add filter
      * @param pageNumber -> start with 0
      * @param pageSize ->  to divide one page in to multiple
-     * @return PostResponse pageSize,,pageNumber, totalElements, totalPages lastPage
+     * @return PostResponse pageSize, pageNumber, totalElements, totalPages lastPage
      */
     @GetMapping("/getAllPosts")
     public PostResponse getAllPosts(
@@ -166,7 +165,6 @@ public class PostController {
         PostDto updatedPost = postService.updatePost(postDto, postId);
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
-
     /**
      * @param imageName -> to get image
      * @throws IOException -> throws if image not found
