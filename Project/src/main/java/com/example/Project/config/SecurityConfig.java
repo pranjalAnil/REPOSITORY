@@ -58,7 +58,8 @@ public class SecurityConfig {
                                         "/swagger-ui.html",
                                         "/swagger-ui/**",
                                         "/swagger-resources/**",
-                                        "/webjars/**"
+                                        "/webjars/**",
+                                        "/swagger-ui.html"
 
                                 ).permitAll()
                                 .requestMatchers("/userController/deleteCategoryById/{id}"

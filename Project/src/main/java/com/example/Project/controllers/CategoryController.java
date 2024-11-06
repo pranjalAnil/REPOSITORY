@@ -34,7 +34,7 @@ public class CategoryController {
      * @return -all categorise
      */
     @GetMapping("/getAllCategories")
-    public List<CategoryDto> getAllCategory(){
+    public List<CategoryDto> getAllCategory() {
         List<CategoryDto> list=categoryService.getAllCategory();
         return list;
     }
@@ -42,7 +42,7 @@ public class CategoryController {
     /**
      *
      * @param id -> to get particular category by its id
-     * @return Category
+     * @return Category with categoryId id
      */
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getCategoryByID(@PathVariable int id){

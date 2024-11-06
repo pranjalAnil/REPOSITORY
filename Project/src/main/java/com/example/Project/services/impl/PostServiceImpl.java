@@ -1,5 +1,4 @@
 package com.example.Project.services.impl;
-
 import com.example.Project.entities.Category;
 import com.example.Project.entities.Post;
 import com.example.Project.entities.User;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

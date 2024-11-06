@@ -26,7 +26,7 @@ public class AuthController {
     /**
      *
      * @param loginDto -> email password
-     * @return String
+     * @return String -> gives token in output
      */
     @Async
     @PostMapping("/login")
@@ -41,11 +41,7 @@ public class AuthController {
         if (authentication.isAuthenticated()){
             return jwtService.generateToken(loginDto.getEmail());
         }else {
-            return "not valid";
+            return "Enter Valid Details";
         }
-
     }
-
-
-
 }

@@ -53,7 +53,6 @@ public class PostController {
     }
 
     //Get post using user ID
-
     /**
      * @param userId-> get all posts of particular user with userID
      * @return list postDto
@@ -65,7 +64,6 @@ public class PostController {
 
 
     // Get post using post category
-
     /**
      * @param categoryId -> get all posts of particular category with userID
      * @return List<PostDto>
