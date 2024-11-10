@@ -1,6 +1,8 @@
 package com.example.Task1_event_Scheduling.controllers;
 import com.example.Task1_event_Scheduling.entities.CustomEvent;
-import com.example.Task1_event_Scheduling.services.CustomerEventService;
+import com.example.Task1_event_Scheduling.payloads.CustomEventDto;
+import com.example.Task1_event_Scheduling.services.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class customEventController {
     @Autowired
-    CustomerEventService customerEventService;
+    CustomEventService customEventService;
 
     @PostMapping("/add")
-    public ResponseEntity<CustomEvent> addCustomEvent(@RequestBody CustomEvent customEvent){
-        CustomEvent customEvent1= customerEventService.addEvent(customEvent);
-        return new ResponseEntity<>(customEvent1, HttpStatus.CREATED);
+    public ResponseEntity<CustomEventDto> addCustomEvent(@Valid @RequestBody  CustomEventDto customEventDto){
+        CustomEventDto customEventDto1= customEventService.addEvent(customEventDto);
+        return new ResponseEntity<>(customEventDto1, HttpStatus.CREATED);
     }
 
 }

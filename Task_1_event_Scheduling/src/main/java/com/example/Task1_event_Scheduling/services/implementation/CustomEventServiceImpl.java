@@ -1,8 +1,11 @@
-package com.example.Task1_event_Scheduling.services;
+package com.example.Task1_event_Scheduling.services.implementation;
 import com.example.Task1_event_Scheduling.entities.CustomEvent;
+import com.example.Task1_event_Scheduling.payloads.CustomEventDto;
 import com.example.Task1_event_Scheduling.repositories.CustomEventsRepo;
+import com.example.Task1_event_Scheduling.services.CustomEventService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -10,28 +13,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
+
 @Service
-public class CustomerEventService {
+public class CustomEventServiceImpl implements CustomEventService {
     Timestamp timestamp(){
         return new Timestamp(System.currentTimeMillis());
     }
     @Autowired
     CustomEventsRepo customEventsRepo;
-    public CustomEvent addEvent(CustomEvent customEvent){
-        customEvent.setTimestamp(timestamp());
-        return customEventsRepo.save(customEvent);
+    public CustomEventDto addEvent(CustomEventDto customEventDto){
+        customEventDto.setTimestamp(timestamp());
+        customEventDto.setStatus(0);
+        CustomEvent customEvent =new CustomEvent();
+        BeanUtils.copyProperties(customEventDto,customEvent);
+
+        customEvent= customEventsRepo.save(customEvent);
+        BeanUtils.copyProperties(customEvent,customEventDto);
+        return customEventDto;
     }
 
-    @Scheduled(cron = "0 02 17 * * ?")
-    public void archiveAndDeleteOldEvents() {
-//        .minusDays(0)
-        System.out.println("time calculation");
-        LocalDateTime cutoffDate = LocalDateTime.now();
-        Timestamp cutoffTimestamp = Timestamp.valueOf(cutoffDate);
 
-        List<CustomEvent> oldEvents = customEventsRepo.findByTimestampBefore(cutoffTimestamp);
+    @Scheduled(cron = "0 0 2 1,15 * ?")
+    public void archiveAndDeleteOldEvents()  {
+
+        List<CustomEvent> oldEvents = customEventsRepo.findAll();
 
         if (!oldEvents.isEmpty()) {
             writeEventsToCSV(oldEvents);

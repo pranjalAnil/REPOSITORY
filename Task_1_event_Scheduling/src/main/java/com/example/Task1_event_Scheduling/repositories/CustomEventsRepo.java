@@ -6,5 +6,4 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface CustomEventsRepo extends JpaRepository<CustomEvent,Integer> {
-    List<CustomEvent> findByTimestampBefore(Timestamp cutoffTimestamp);
 }

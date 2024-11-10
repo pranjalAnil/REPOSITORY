@@ -17,5 +17,5 @@ public class CustomEvent {
     private Timestamp timestamp;
     private String customerId;
     private String event;
-    private int status =0;
+    private int status ;
 }
