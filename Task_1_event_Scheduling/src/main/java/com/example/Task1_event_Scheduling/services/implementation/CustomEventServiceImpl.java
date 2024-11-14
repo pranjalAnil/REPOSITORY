@@ -37,7 +37,7 @@ public class CustomEventServiceImpl implements CustomEventService {
     @Scheduled(cron = "0 0 2 1,15 * ?")
     public void archiveAndDeleteOldEvents()  {
 
-        List<CustomEvent> oldEvents = customEventsRepo.findAll();
+        List<CustomEvent> oldEvents = customEventsRepo.findByStatus(0);
 
         if (!oldEvents.isEmpty()) {
             writeEventsToCSV(oldEvents);
@@ -46,6 +46,7 @@ public class CustomEventServiceImpl implements CustomEventService {
                    customEventsRepo.delete(customEvent);
                }
            }
+            System.out.println("Deletion Completed");
 
         }
 

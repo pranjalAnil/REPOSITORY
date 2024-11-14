@@ -1,5 +1,4 @@
 package com.example.Task_2_Third_party_API_Integration_Using_JSON.service.implementation;
-
 import com.example.Task_2_Third_party_API_Integration_Using_JSON.enttity.Weather;
 import com.example.Task_2_Third_party_API_Integration_Using_JSON.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,13 @@ public class WeatherServiceImpl implements WeatherService {
 
         @Autowired
         RestTemplate restTemplate;
+        @Override
         public Weather weatherData(String city){
 //                String URL="https://api.weatherstack.com/current?access_key="+apiKey+"&query="+city;
                 String finalApi=API.replace("API_KEY",apiKey).replace("CITY",city);
                 ResponseEntity<Weather> weatherResponseEntity= restTemplate
                         .exchange(finalApi, HttpMethod.GET,null, Weather.class);
+
             return weatherResponseEntity.getBody();
 
         }

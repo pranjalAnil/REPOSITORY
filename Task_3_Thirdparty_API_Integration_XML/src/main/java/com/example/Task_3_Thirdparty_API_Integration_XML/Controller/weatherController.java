@@ -2,7 +2,6 @@ package com.example.Task_3_Thirdparty_API_Integration_XML.Controller;
 
 import com.example.Task_3_Thirdparty_API_Integration_XML.entity.Weather;
 import com.example.Task_3_Thirdparty_API_Integration_XML.services.WeatherService;
-import com.example.Task_3_Thirdparty_API_Integration_XML.services.implementation.WeatherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
