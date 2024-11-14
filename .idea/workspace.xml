@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="455d45af-7c34-492c-b5af-189afbf83a04" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/payload/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/repository/UserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/main/java/com/example/Task_6_CRUD_XML/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task_6_CRUD_XML/src/test/java/com/example/Task_6_CRUD_XML/services/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/controllers/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/services/impl/FileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/main/java/com/example/Project/services/impl/FileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project/src/test/java/com/example/Project/Services/UserServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project/src/test/java/com/example/Project/Services/UserServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_event_Scheduling/archived_events.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_event_Scheduling/archived_events.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/controllers/customEventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/controllers/customEventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/repositories/CustomEventsRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/repositories/CustomEventsRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/services/implementation/CustomEventServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_event_Scheduling/src/main/java/com/example/Task1_event_Scheduling/services/implementation/CustomEventServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/controller/weatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/controller/weatherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Current.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Current.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/enttity/Weather.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/service/implementation/WeatherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_2_Third_party_API_Integration_Using_JSON/src/main/java/com/example/Task_2_Third_party_API_Integration_Using_JSON/service/implementation/WeatherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_3_Thirdparty_API_Integration_XML/src/main/java/com/example/Task_3_Thirdparty_API_Integration_XML/Controller/weatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_3_Thirdparty_API_Integration_XML/src/main/java/com/example/Task_3_Thirdparty_API_Integration_XML/Controller/weatherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_3_Thirdparty_API_Integration_XML/src/main/java/com/example/Task_3_Thirdparty_API_Integration_XML/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Task_3_Thirdparty_API_Integration_XML/src/main/java/com/example/Task_3_Thirdparty_API_Integration_XML/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/Constant/AppConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/Task5CashbackTxnPeandingFailedEntriesApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/controller/CashbackTxnController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/entities/CashbackTxn1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/entities/CashbackTxn2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/entities/CashbackTxn3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/entities/CashbackTxn4.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/entities/CashbackTxn5.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/repositories/CashbackTxn1Repo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/repositories/CashbackTxn2Repo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/repositories/CashbackTxn3Repo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/repositories/CashbackTxn4Repo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/repositories/CashbackTxn5Repo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/java/com/example/task_5_cashbackTxn_peanding_failed_entries/services/CashbackTxnServices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task_5_cashbackTxn_pending_failed_entries/src/test/java/com/example/task_5_cashbackTxn_peanding_failed_entries/Task5CashbackTxnPeandingFailedEntriesApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "pranjalAnil"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/pranjalAnil/REPOSITORY.git",
+    "accountId": "6b7f6d4d-a09f-4809-831b-3d77959922f2"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2ojjfHt09YsyBonvukZ07xrgdhq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="455d45af-7c34-492c-b5af-189afbf83a04" name="Changes" comment="" />
+      <created>1731389982265</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731389982265</updated>
+    </task>
+    <servers />
+  </component>
+</project>
