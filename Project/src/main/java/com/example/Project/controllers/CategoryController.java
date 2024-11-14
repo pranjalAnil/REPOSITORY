@@ -10,13 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/userController")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
     /**
      *
      * @param categoryDto ->categoryTitle, categoryDescription
@@ -28,7 +26,6 @@ public class CategoryController {
         return new ResponseEntity<>(categoryDto1, HttpStatus.CREATED);
 
     }
-
     /**
      *
      * @return -all categorise
@@ -38,7 +35,6 @@ public class CategoryController {
         List<CategoryDto> list=categoryService.getAllCategory();
         return list;
     }
-
     /**
      *
      * @param id -> to get particular category by its id
@@ -48,7 +44,6 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getCategoryByID(@PathVariable int id){
         return  ResponseEntity.ok(categoryService.getCategoryByID(id));
     }
-
     /**
      *
      * @param id -> to update particular category

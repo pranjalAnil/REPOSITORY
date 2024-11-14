@@ -1,9 +1,7 @@
 package com.example.Project.services.impl;
 
-import com.example.Project.entities.User;
 import com.example.Project.exception.ResourceNotFoundException;
 import com.example.Project.repositories.UserRepo;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

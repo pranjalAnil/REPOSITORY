@@ -30,7 +30,6 @@ public class UserServiceTests {
 
     @Test
     public void testGetAllUsers(){
-//        assertTrue(userRepo.findAll().isEmpty());
         assertFalse(userRepo.findAll().isEmpty());
     }
 

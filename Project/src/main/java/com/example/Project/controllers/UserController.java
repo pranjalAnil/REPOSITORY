@@ -1,5 +1,8 @@
 package com.example.Project.controllers;
 
+import com.example.Project.entities.User;
+import com.example.Project.exception.EmailExists;
+import com.example.Project.exception.EmailNotValid;
 import com.example.Project.payloads.APIResponse;
 import com.example.Project.payloads.UserDto;
 import com.example.Project.services.UserServices;
@@ -23,10 +26,20 @@ public class UserController {
      * @return created user with response 201 created
      */
     @PostMapping("/createUser")
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        UserDto createUserDto = userServices.createUser(userDto);
-        return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
+    public ResponseEntity<?> createUser( @RequestBody @Valid UserDto userDto) {
+        try {
+            UserDto createUserDto = userServices.createUser(userDto);
+            return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
+        } catch (EmailExists e) {
+            APIResponse response = new APIResponse("Email already exists.", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }catch (EmailNotValid e){
+            APIResponse response = new APIResponse("Email not valid.", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
     }
+
 
     /**
      *
@@ -55,10 +68,19 @@ public class UserController {
      * @return updated user with response 200 ok
      */
     @PutMapping("/update")
-    public ResponseEntity<UserDto> updateUserById(@Valid @RequestBody UserDto userDto) {
-        UserDto userDto1 = userServices.update(userDto);
-        return ResponseEntity.ok(userDto1);
+    public ResponseEntity<?> updateUserById(@Valid @RequestBody UserDto userDto) {
+        try {
+            UserDto userDto1 = userServices.update(userDto);
+            return ResponseEntity.ok(userDto1);
+        } catch (EmailExists e) {
+            APIResponse response = new APIResponse("Email already exists.", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        } catch (EmailNotValid e) {
+            APIResponse response = new APIResponse("Email not valid.", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
 
+
+        }
     }
 
     /**

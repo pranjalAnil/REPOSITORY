@@ -23,6 +23,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EmailExists.class)
+    public ResponseEntity<APIResponse> emailExists(ResourceNotFoundException ex) {
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(EmailNotValid.class)
+    public ResponseEntity<APIResponse> emailNotValid(ResourceNotFoundException ex) {
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<APIResponse>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodNotValidException(MethodArgumentNotValidException ex) {
         Map<String, String> resp = new HashMap<>();
@@ -58,6 +71,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Map<String, String>>(resp, HttpStatus.BAD_REQUEST);
 
     }
+
+
+
 
 
 }

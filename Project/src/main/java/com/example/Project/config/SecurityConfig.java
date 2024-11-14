@@ -53,13 +53,7 @@ public class SecurityConfig {
                                         "/api/createUser",
                                         "/api/getAllUsers",
                                         "/auth/login",
-                                        "/userController/getAllCategories",
-                                        "/v3/api-docs",
-                                        "/swagger-ui.html",
-                                        "/swagger-ui/**",
-                                        "/swagger-resources/**",
-                                        "/webjars/**",
-                                        "/swagger-ui.html"
+                                        "/userController/getAllCategories"
 
                                 ).permitAll()
                                 .requestMatchers("/userController/deleteCategoryById/{id}"

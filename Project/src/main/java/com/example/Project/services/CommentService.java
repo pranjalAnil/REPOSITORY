@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 public interface CommentService {
     CommentDto createComment(CommentDto commentDto,int postId);
     void deleteComment(int commentId);
+    CommentDto updateComment(CommentDto commentDto,int commentId);
 
 }

@@ -29,7 +29,6 @@ public class User implements UserDetails {
     @Getter(value = AccessLevel.NONE)
     private String password;
 
-
     private String about;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -37,7 +36,6 @@ public class User implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> role = new ArrayList<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

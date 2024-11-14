@@ -8,13 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/api")
 public class CommentController {
     @Autowired
     private CommentService commentService;
-
     /**
      *
      * @param commentDto -> content
@@ -37,6 +35,20 @@ public class CommentController {
         System.out.println("Deleting comment with : " + commentId);
         commentService.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    /**
+     *
+     * @param commentDto -> content
+     * @param commentId -> to find particular comment
+     * @return commentDto with
+     */
+    @PutMapping("/post/updateComment/{commentId}")
+    public  ResponseEntity<CommentDto> updateComment(@PathVariable int commentId,@RequestBody CommentDto commentDto){
+        System.out.println("comment");
+        commentService.updateComment(commentDto,commentId);
+        return new ResponseEntity<>(commentDto,HttpStatus.OK);
 
     }
 

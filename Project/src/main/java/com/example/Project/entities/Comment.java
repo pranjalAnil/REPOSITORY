@@ -15,6 +15,9 @@
         private String content;
 
         @ManyToOne
+        private User user;
+
+        @ManyToOne
         private Post post;
 
     }
