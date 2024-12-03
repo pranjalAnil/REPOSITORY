@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepo extends JpaRepository<Comment,Integer> {
-    Optional<Comment> findByUser(User user);
+    List<Comment> findByUser(User user);
 }

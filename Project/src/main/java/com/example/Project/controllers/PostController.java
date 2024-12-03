@@ -1,5 +1,7 @@
 package com.example.Project.controllers;
 import com.example.Project.config.AppConstant;
+import com.example.Project.exception.DeactivatedUser;
+import com.example.Project.payloads.APIResponse;
 import com.example.Project.payloads.PostDto;
 import com.example.Project.payloads.PostResponse;
 import com.example.Project.services.FileService;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/api")
@@ -39,12 +39,19 @@ public class PostController {
      * @return createPost, HttpStatus. CREATED
      */
     @PostMapping("/user/category/{categoryId}/posts")
-    public ResponseEntity<PostDto> createPost(
+    public ResponseEntity<?> createPost(
             @Valid @RequestBody PostDto postDto,
             @PathVariable int categoryId
     ) {
-        PostDto createPost = postService.createPost(postDto, categoryId);
-        return new ResponseEntity<PostDto>(createPost, HttpStatus.CREATED);
+        try {
+            PostDto createPost = postService.createPost(postDto, categoryId);
+            return new ResponseEntity<PostDto>(createPost, HttpStatus.CREATED);
+        }
+        catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Please Activate your account", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
 
     }
 
@@ -54,8 +61,15 @@ public class PostController {
      * @return list postDto
      */
     @GetMapping("/user/{userId}/posts")
-    public List<PostDto> getPostsByUser(@PathVariable int userId) {
-        return postService.getPostByUser(userId);
+    public ResponseEntity<?> getPostsByUser(@PathVariable int userId) {
+        try {
+            return new ResponseEntity<>(postService.getPostByUser(userId),HttpStatus.OK) ;
+        }
+        catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Deactivated User", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
     }
 
 
@@ -65,8 +79,15 @@ public class PostController {
      * @return List<PostDto>
      */
     @GetMapping("/category/{categoryId}/posts")
-    public List<PostDto> getPostByCategory(@PathVariable int categoryId) {
-        return postService.getPostByCategory(categoryId);
+    public ResponseEntity<?> getPostByCategory(@PathVariable int categoryId) {
+        try {
+            return new ResponseEntity<>(postService.getPostByCategory(categoryId),HttpStatus.OK) ;
+        }catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Deactivated User", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
+
     }
 
     /**
@@ -74,8 +95,15 @@ public class PostController {
      * @return PostDto
      */
     @GetMapping("/post/{postId}")
-    public PostDto getPostByPostID(@PathVariable int postId) {
-        return postService.getPostById(postId);
+    public ResponseEntity<?> getPostByPostID(@PathVariable int postId) {
+        try {
+            return new ResponseEntity<>(postService.getPostById(postId),HttpStatus.OK);
+        }
+        catch (DeactivatedUser deactivatedUser) {
+            APIResponse response = new APIResponse("Deactivated User", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+
     }
 
     // Update the data using postID
@@ -86,10 +114,16 @@ public class PostController {
      * @return PostDto
      */
     @PutMapping("/updatePosts/{postId}")
-    public ResponseEntity<PostDto> updatePost(@PathVariable int postId, @Valid @RequestBody PostDto postDto) {
-        System.out.println("Updating post with ID: " + postId);
-        PostDto updatedPost = postService.updatePost(postDto, postId);
-        return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+    public ResponseEntity<?> updatePost(@PathVariable int postId, @Valid @RequestBody PostDto postDto) {
+        try {
+            System.out.println("Updating post with ID: " + postId);
+            PostDto updatedPost = postService.updatePost(postDto, postId);
+            return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+        } catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Please activate your account", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
     }
 
     /**
@@ -97,10 +131,18 @@ public class PostController {
      * @return response 204 No_CONTENT
      */
     @DeleteMapping("/DeletePost/{postId}")
-    public ResponseEntity<PostDto> deletePost(@PathVariable int postId) {
-        System.out.println("Deleting post with ID: " + postId);
-        postService.deleteMyPost(postId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> deletePost(@PathVariable int postId) {
+        try {
+            System.out.println("Deleting post with ID: " + postId);
+
+            return new ResponseEntity<>( postService.deleteMyPost(postId),HttpStatus.NO_CONTENT);
+
+        }catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Please activate your account", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
+
 
     }
 
@@ -111,27 +153,42 @@ public class PostController {
      * @return PostResponse pageSize, pageNumber, totalElements, totalPages lastPage
      */
     @GetMapping("/getAllPosts")
-    public PostResponse getAllPosts(
+    public ResponseEntity<?> getAllPosts(
 //            ?pageNumber=0&pageSize=4
             @RequestParam(value = "pageNumber", defaultValue = AppConstant.PAGE_NUMBER, required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstant.PAGE_SIZE, required = false) int pageSize
 
     ) {
-        System.out.println("Getting all posts");
-        PostResponse listPostDto = postService.getAllPost(pageNumber, pageSize);
-        System.out.println(listPostDto);
-        System.out.println("Got all posts");
-        return listPostDto;
+        try {
+            System.out.println("Getting all posts");
+            PostResponse listPostDto = postService.getAllPost(pageNumber, pageSize);
+            System.out.println(listPostDto);
+            System.out.println("Got all posts");
+            return new ResponseEntity<>(listPostDto,HttpStatus.OK);
+
+        }catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Please activate your account", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
+
     }
 
-//    Get User own posts
 
     /**
      * @return List<PostDto> --(post of user who logged in)
      */
     @GetMapping("/myPosts")
-    public ResponseEntity<List<PostDto>> getMyPosts() {
-        return new ResponseEntity<>(postService.getMyPosts(), HttpStatus.OK);
+    public ResponseEntity<?> getMyPosts() {
+        try {
+            return new ResponseEntity<>(postService.getMyPosts(), HttpStatus.OK);
+
+        } catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Please activate your account", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
+
     }
 
     //    Post Image upload

@@ -20,4 +20,8 @@
         @ManyToOne
         private Post post;
 
+
+
+//        private boolean isDisabled;
+
     }

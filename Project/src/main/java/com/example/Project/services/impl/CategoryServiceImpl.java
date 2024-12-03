@@ -5,7 +5,6 @@ import com.example.Project.payloads.CategoryDto;
 import com.example.Project.repositories.CategoryRepo;
 import com.example.Project.services.CategoryService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     *
      * @param categoryDto
      * @param id
      * @return CategoryDto
@@ -53,8 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     *
-     * @param id
+     * @param id  delete category by ID only admin can do this
      */
     @Override
     public void deleteCategory(int id) {
@@ -67,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      *
-     * @param id
+     * @param id category ID to get it
      * @return category
      */
     @Override
@@ -94,8 +91,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      *
-     * @param category
-     * @return
+     * @param category {"categoryTitle":String,"categoryDescription":"String"}
+     *
      */
     private CategoryDto categoryToCategoryDto(Category category){
         return modelMapper.map(category,CategoryDto.class);

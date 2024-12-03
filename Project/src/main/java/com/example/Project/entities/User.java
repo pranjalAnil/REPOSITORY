@@ -31,6 +31,8 @@ public class User implements UserDetails {
 
     private String about;
 
+    private boolean activated;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
 
@@ -46,6 +48,8 @@ public class User implements UserDetails {
         }
         return set;
     }
+
+
 
 
     @Override

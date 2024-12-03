@@ -1,6 +1,7 @@
 package com.example.Project.controllers;
 
 import com.example.Project.entities.User;
+import com.example.Project.exception.DeactivatedUser;
 import com.example.Project.exception.EmailExists;
 import com.example.Project.exception.EmailNotValid;
 import com.example.Project.payloads.APIResponse;
@@ -39,8 +40,6 @@ public class UserController {
 
         }
     }
-
-
     /**
      *
      * @return List<UserDto>
@@ -49,19 +48,23 @@ public class UserController {
     public List<UserDto> getAllUsers() {
         return userServices.getAllUsers();
     }
-
-
     /**
      *
      * @param id -> userId
      * @return user
      */
     @GetMapping("{id}")
-    public UserDto getUserById(@PathVariable int id) {
-        return userServices.getUserById(id);
+    public ResponseEntity<?> getUserById(@PathVariable int id) {
+        try {
+            return new ResponseEntity<>(userServices.getUserById(id),HttpStatus.OK);
+
+        }catch (DeactivatedUser deactivatedUser){
+            APIResponse response = new APIResponse("Deactivated User", false);
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+
+        }
+
     }
-
-
     /**
      *
      * @param userDto ->  name, email, password, about
@@ -88,9 +91,14 @@ public class UserController {
      * @return NO_CONTENT
      */
     @DeleteMapping("/deleteAccount")
-    public ResponseEntity<APIResponse> deleteUserByID() {
-        userServices.deleteUser();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> deleteUserByID() {
+        return new ResponseEntity<>(userServices.deleteUser(), HttpStatus.OK);
+
+    }
+
+    @PutMapping("/activateOrDeactivateAccount/{activate}")
+    public ResponseEntity<?> activateOrDeactivate(@PathVariable boolean activate){
+        return new ResponseEntity<>(userServices.activateOrDeactivateAccount(activate),HttpStatus.OK);
 
     }
 
