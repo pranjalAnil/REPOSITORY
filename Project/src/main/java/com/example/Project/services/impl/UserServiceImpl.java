@@ -1,10 +1,12 @@
 package com.example.Project.services.impl;
 import com.example.Project.entities.User;
+import com.example.Project.exception.DeactivatedUser;
 import com.example.Project.exception.EmailExists;
 import com.example.Project.exception.EmailNotValid;
 import com.example.Project.exception.ResourceNotFoundException;
 import com.example.Project.payloads.UserDto;
 import com.example.Project.repositories.UserRepo;
+import com.example.Project.services.DeletedUserService;
 import com.example.Project.services.UserServices;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,8 @@ public class UserServiceImpl implements UserServices {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    @Autowired
+    private DeletedUserService deletedUserService;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -46,6 +49,7 @@ public class UserServiceImpl implements UserServices {
             if (status == 0) {
                 List<String> role = new ArrayList<>();
                 role.add("ROLE_NORMAL_USER");
+                user.setActivated(true);
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
                 user.setRole(role);
                 User savedUser = userRepo.save(user);
@@ -57,31 +61,20 @@ public class UserServiceImpl implements UserServices {
         }else {
 
             throw new EmailNotValid(user.getEmail());
-
         }
 
     }
-
-
     @Override
     public UserDto update(UserDto userDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-
         int status=0;
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " email " + email, 0));
-
-
-
         List<User> userList= userRepo.findAll();
-
         if(userDto.getEmail().endsWith(".com")) {
             if(!Objects.equals(user.getEmail(),userDto.getEmail())) {
-
-
                 for (User user1 : userList) {
-
                     if (Objects.equals(user1.getEmail(), userDto.getEmail())) {
                         status = 1;
                         break;
@@ -95,14 +88,13 @@ public class UserServiceImpl implements UserServices {
 
 
             if (status == 0) {
-
-
                 List<String> role = new ArrayList<>();
-                role.add("ROLE_NORMAL_USER");
+                role.add("ROLE_ADMIN");
                 user.setRole(role);
                 user.setName(userDto.getName());
                 user.setEmail(userDto.getEmail());
                 user.setAbout(userDto.getAbout());
+                user.setActivated(true);
 
                 if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
                     user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -127,43 +119,61 @@ public class UserServiceImpl implements UserServices {
     public UserDto getUserById(Integer userId) {
         User user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", userId));
-        return userToDto(user);
+        if(user.isActivated()){
+            return userToDto(user);
+
+        }else {
+            throw new DeactivatedUser(user.getEmail());
+
+        }
+
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        List<User> userList = userRepo.findAll();
+        List<User> userList = userRepo.findByActivated(true);
         return userList.stream().map(this::userToDto).collect(Collectors.toList());
     }
 
     @Override
-    public void deleteUser() {
+    public String deleteUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
-        this.userRepo.delete(user);
+
+        String s= deletedUserService.deleteUser(user);
+
+        userRepo.delete(user);
+        return s;
+
+    }
+
+    @Override
+    public String activateOrDeactivateAccount(boolean isActive) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", " email "+email, 0));
+        user.setActivated(isActive);
+
+        userRepo.save(user);
+
+        if(isActive){
+            return "account activated successfully";
+        }
+        else {
+            return "account deactivated";
+
+        }
+
     }
 
     private User dtoToUser(UserDto userDto) {
-//        User user = new User();
-//        user.setId(userDto.getId()); // Be cautious with this when creating new users
-//        user.setName(userDto.getName());
-//        user.setEmail(userDto.getEmail());
-//        user.setPassword(userDto.getPassword()); // Hash this in a real app
-//        user.setAbout(userDto.getAbout());
         return modelMapper.map(userDto,User.class);
     }
 
     private UserDto userToDto(User user) {
-//        UserDto userDto = new UserDto();
-//        userDto.setId(user.getId()); // Ensure the ID is included
-//        userDto.setName(user.getName());
-//        userDto.setEmail(user.getEmail());
-//        userDto.setPassword(user.getPassword()); // Be cautious with exposing this
-//        userDto.setAbout(user.getAbout());
-//        return userDto;
-
         return modelMapper.map(user,UserDto.class);
     }
 }

@@ -30,6 +30,10 @@ public class Post {
     @ManyToOne
     private User user;
 
+    private int post_like;
+
+    private boolean isCommentDisabled;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 

@@ -34,7 +34,7 @@ public class CustomEventServiceImpl implements CustomEventService {
         return customEventDto;
     }
 
-    @Scheduled(cron = "0 49 16 10,15 * ?")
+    @Scheduled(cron = "0 0 2 1,15 * ?")
     public void archiveAndDeleteOldEvents() {
         List<CustomEvent> oldEvents = customEventsRepo.findAll();
 

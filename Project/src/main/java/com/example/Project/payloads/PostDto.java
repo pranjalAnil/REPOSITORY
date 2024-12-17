@@ -33,6 +33,8 @@ public class PostDto {
 
     private UserDto user;
 
+    private boolean isCommentDisabled;
+
     private List<CommentDto> comments =new ArrayList<>();
 
 

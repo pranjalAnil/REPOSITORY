@@ -1,8 +1,9 @@
 package com.example.Project.services.impl;
-
 import com.example.Project.entities.Comment;
 import com.example.Project.entities.Post;
 import com.example.Project.entities.User;
+import com.example.Project.exception.CommentDisabled;
+import com.example.Project.exception.DeactivatedUser;
 import com.example.Project.exception.ResourceNotFoundException;
 import com.example.Project.payloads.CommentDto;
 import com.example.Project.payloads.UserDto;
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -37,29 +38,63 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto createComment(CommentDto commentDto, int postId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
+
         User user = userRepo.findByEmail(email).orElseThrow(
                 ()-> new  ResourceNotFoundException("user",email,0)
         );
-        UserDto userDto=modelMapper.map(user,UserDto.class);
-        Post post=postRepo.findById(postId).orElseThrow(
-                ()->new ResourceNotFoundException("Post"," postId ",postId)
-        );
-        commentDto.setUser(userDto);
-        Comment comment =modelMapper.map(commentDto,Comment.class);
-        comment.setPost(post);
-        Comment comment1=commentRepo.save(comment);
-        return modelMapper.map(comment1,CommentDto.class);
+        if (user.isActivated()) {
+
+            UserDto userDto = modelMapper.map(user, UserDto.class);
+            Post post = postRepo.findById(postId).orElseThrow(
+                    () -> new ResourceNotFoundException("Post", " postId ", postId)
+            );
+            if (!post.isCommentDisabled()) {
+                if (post.getUser().isActivated()) {
+                    commentDto.setUser(userDto);
+                    Comment comment = modelMapper.map(commentDto, Comment.class);
+                    comment.setPost(post);
+                    Comment comment1 = commentRepo.save(comment);
+                    return modelMapper.map(comment1, CommentDto.class);
+                } else {
+                    throw new DeactivatedUser(email);
+                }
+            }else {
+                throw new CommentDisabled(postId);
+            }
+        }else {
+            throw new DeactivatedUser(email);
+        }
 
     }
 
     @Override
-    public void deleteComment(int commentId){
-        Comment comment= commentRepo.findById(commentId).orElseThrow(
-                () -> new ResourceNotFoundException("Comment", "CommentID", commentId)
+    public String deleteComment(int commentId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userRepo.findByEmail(email).orElseThrow(
+                ()-> new  ResourceNotFoundException("user",email,0)
         );
-        commentRepo.delete(comment);
-        System.out.println("Comment deleted");
-        commentRepo.flush();
+        if (user.isActivated()) {
+
+
+            List<Comment> comment = commentRepo.findByUser(user);
+            Comment commentToDelete = comment.stream()
+                    .filter(comment1 ->comment1.getCommentId () == commentId) // assuming Post has a getId() method
+                    .findFirst()
+                    .orElseThrow(() -> new ResourceNotFoundException("Comment", "Comment ID", commentId)
+                    );
+            if (commentToDelete.getUser().isActivated()) {
+                commentRepo.delete(commentToDelete);
+                commentRepo.flush();
+                return "Comment Deleted";
+            }else {
+                throw new DeactivatedUser(commentToDelete.getUser().getEmail());
+            }
+        }else
+        {
+            throw new DeactivatedUser(email);
+        }
 
     }
 
@@ -72,19 +107,32 @@ public class CommentServiceImpl implements CommentService {
                 ()-> new  ResourceNotFoundException("user",email,0)
         );
 
-        UserDto userDto =modelMapper.map(user,UserDto.class);
+        if (user.isActivated()) {
+            UserDto userDto = modelMapper.map(user, UserDto.class);
 
-        Comment comment =commentRepo.findByUser(user).orElseThrow(
-                ()->new ResourceNotFoundException("Comment","commentId",commentId)
-        );
-        comment.setContent(commentDto.getContent());
-        comment.setUser(user);
-        commentRepo.save(comment);
+            List<Comment> commentList = commentRepo.findByUser(user);
 
-        BeanUtils.copyProperties(comment,commentDto);
-        commentDto.setUser(userDto);
+            Comment comment =commentList.stream()
+                    .filter(comment1 ->comment1.getCommentId () == commentId) // assuming Post has a getId() method
+                    .findFirst()
+                    .orElseThrow(() -> new ResourceNotFoundException("Comment", "Comment ID", commentId)
+                    );
+            if (comment.getUser().isActivated()) {
 
-        return commentDto;
+                comment.setContent(commentDto.getContent());
+                comment.setUser(user);
+                commentRepo.save(comment);
+
+                BeanUtils.copyProperties(comment, commentDto);
+                commentDto.setUser(userDto);
+
+                return commentDto;
+            }else {
+                throw new DeactivatedUser(comment.getUser().getEmail());
+            }
+        }else {
+            throw new DeactivatedUser(email);
+        }
     }
 
 

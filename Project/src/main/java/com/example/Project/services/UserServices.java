@@ -11,5 +11,6 @@ public interface UserServices {
     UserDto update(UserDto userDto);
     UserDto getUserById(Integer userid);
     List<UserDto> getAllUsers();
-    void deleteUser();
+    String deleteUser();
+    String activateOrDeactivateAccount(boolean isActive);
 }
