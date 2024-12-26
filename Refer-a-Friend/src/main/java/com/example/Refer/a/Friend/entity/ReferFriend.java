@@ -8,11 +8,18 @@ import lombok.Data;
 
 @Data
 @Entity
-public class UsedReferralCodes {
+public class ReferFriend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String refereeId;
-    private String usedReferralCode;
+    private int inviteId;
+
+    private int refereeId;
+
+    private String referralCode;
+
+    private String referredContact;
+
+    private String status;
 
 }
+

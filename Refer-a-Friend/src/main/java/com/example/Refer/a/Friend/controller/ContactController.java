@@ -1,7 +1,4 @@
 package com.example.Refer.a.Friend.controller;
-
-import com.example.Refer.a.Friend.entity.Contacts;
-import com.example.Refer.a.Friend.exceptions.AccessDenied;
 import com.example.Refer.a.Friend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +20,6 @@ public class ContactController {
             return new ResponseEntity<>(userService.getContactsNotOnBoarded(userId), HttpStatus.OK);
 
     }
-//    @PostMapping("/add")
-//    public ResponseEntity<?>addContacts(@RequestBody Contacts contacts){
-//        return new ResponseEntity<>()
-//    }
 
 
 }
