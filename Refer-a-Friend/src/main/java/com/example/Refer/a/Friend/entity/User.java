@@ -24,5 +24,6 @@
         private double transactionAmount;
         private boolean isReferred;
         private Timestamp timestamp;
+        private int cbTotal;
 
     }

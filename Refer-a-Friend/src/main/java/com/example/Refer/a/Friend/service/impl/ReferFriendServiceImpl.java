@@ -22,8 +22,6 @@ public class ReferFriendServiceImpl implements ReferFriendService {
     @Autowired
     UserRepo userRepo;
 
-
-
     private InviteMessage inviteMessageGeneration(String mobileNumber,String referralCode){
         InviteMessage inviteMessage=new InviteMessage();
         inviteMessage.setTitle("CLICK ON SIGNUP WITH BLOW REFERRAL CODE AND GET CASHBACK**");
